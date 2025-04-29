@@ -1,4 +1,6 @@
 import {Router} from 'express'
+import { pool } from  '../db.js';
+
 
 const router = Router();
 
@@ -16,7 +18,8 @@ router.post('/users', (req,res) =>{
     res.send("creando usuario")
 })
 router.put('/users/:id', (req,res) =>{
-    res.send("Obteniendo")
+    const {id} = req.params;
+    res.send("Actualizando usuarios")
 })
 router.delete('/users/:id', (req,res) =>{
     res.send("Obteniendo")
