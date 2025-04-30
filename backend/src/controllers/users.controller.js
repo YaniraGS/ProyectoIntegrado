@@ -38,8 +38,8 @@ export const updateUser = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
 
-    const {rows} = await pool.query (
-        'UPDATE users SET email =$1, password = $2, username =$3 WHERE uid= $4', 
+    const { rows } = await pool.query(
+        'UPDATE users SET email =$1, password = $2, username =$3 WHERE uid= $4',
         [data.email, data.password, data.username, id])
     res.json(rows[0])
 }

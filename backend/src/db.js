@@ -1,9 +1,10 @@
 import pg from 'pg'
+import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config'
 
 export const pool = new pg.Pool({
-    user: "postgres",
-    host:"localhost",
-    password: "TUria1423",
-    database: "recetasdeyanira",
-    port: "5432"
+    user: DB_USER,
+    host: DB_HOST,
+    password: DB_PASSWORD,
+    database: DB_DATABASE,
+    port: DB_PORT
 })
