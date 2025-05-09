@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { pool } from '../db.js';
 import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers/users.controller.js';
 
 
