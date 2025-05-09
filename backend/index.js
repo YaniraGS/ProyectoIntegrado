@@ -15,3 +15,6 @@ app.use(ingredientsRoutes);
 app.use(favoritesRoutes);
 app.use(recipeIngredientsRoutes);
 app.listen(PORT);
+
+const cors = require('cors');
+app.use(cors());
