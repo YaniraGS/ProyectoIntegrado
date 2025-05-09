@@ -3,9 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "recetasYanira-app": {
+    "recetasYaniraFront": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/recetas-yanira-app",
+            "outputPath": "dist/recetas-yanira-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "recetasYanira-app:build:production"
+              "buildTarget": "recetasYaniraFront:build:production"
             },
             "development": {
-              "buildTarget": "recetasYanira-app:build:development"
+              "buildTarget": "recetasYaniraFront:build:development"
             }
           },
           "defaultConfiguration": "development"

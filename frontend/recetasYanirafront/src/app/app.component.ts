@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RecipesService } from './services/recipes.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  standalone: false,
 })
-export class AppComponent {
-  title = 'recetasYanira-app';
+
+  export class AppComponent implements OnInit {
+  recetas: any[] = [];
+
+  constructor(private recipesService: RecipesService) {}
+
+  ngOnInit() {
+    this.recipesService.getRecipes().subscribe({
+      next: (data) => this.recetas = data,
+      error: (err) => console.error('Error al cargar recetas', err)
+    });
+  }
 }
