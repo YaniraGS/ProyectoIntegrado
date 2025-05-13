@@ -1,19 +1,22 @@
 import { Router } from 'express'
-import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers/users.controller.js';
+import { deleteUser, getUser, getUsers, updateUser,login,register} from '../controllers/users.controller.js';
+import { authenticateToken } from '../middleware/authMiddleware.js';
 
 
 const router = Router();
 
 //CRUD users
+router.post('/login', login);
 
-router.get('/users', getUsers);
+router.post('/register', register);
 
-router.get('/users/:id', getUser);
 
-router.post('/users', createUser);
+router.get('/users', authenticateToken, getUsers);
 
-router.put('/users/:id', updateUser);
+router.get('/users/:id',authenticateToken, getUser);
 
-router.delete('/users/:id', deleteUser);
+router.put('/users/:id', authenticateToken, updateUser);
+
+router.delete('/users/:id', authenticateToken, deleteUser);
 
 export default router;
