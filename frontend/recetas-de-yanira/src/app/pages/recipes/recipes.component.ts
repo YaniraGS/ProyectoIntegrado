@@ -9,8 +9,11 @@ import { Recipe, RecipesService } from '../../services/recipes.service';
 })
 export class RecipesComponent implements OnInit {
   recipes: Recipe[] = [];
+  filteredRecipes: Recipe[] = [];
   loading = false;
   error = '';
+  searchTerm = '';
+
 
   constructor(private recipeService: RecipesService) {}
 
@@ -25,6 +28,14 @@ export class RecipesComponent implements OnInit {
         this.error = 'Error cargando recetas';
         this.loading = false;
       }
+    });
+  }
+
+  filterRecipes() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredRecipes = this.recipes.filter(recipe => {
+      const nameMatch = recipe.name.toLowerCase().includes(term);
+      return nameMatch;
     });
   }
 }

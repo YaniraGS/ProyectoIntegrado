@@ -1,11 +1,27 @@
-<div *ngIf="loading">Cargando recetas...</div>
-<div *ngIf="error">{{ error }}</div>
-
-<div *ngIf="!loading && !error">
-  <div *ngFor="let recipe of recipes" class="recipe-item">
-    
-    <a [routerLink]="['/recipes', recipe.id]" class="recipe-link">
-      {{ recipe.name }}
-    </a>
+<div class="mb-3 d-flex justify-content-center">
+  <div class="input-group" style="max-width: 400px; width: 100%;">
+    <span class="input-group-text" id="search-icon">
+      <i class="bi bi-search"></i> <!-- ícono lupa -->
+    </span>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar por nombre o ingrediente..."
+      aria-label="Buscar"
+      aria-describedby="search-icon"
+      [(ngModel)]="searchTerm"
+      (input)="filterRecipes()"
+    />
   </div>
+</div>
+
+<div *ngIf="loading" class="alert alert-info">Cargando recetas...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<div *ngIf="!loading && !error" class="list-group">
+  <a *ngFor="let recipe of filteredRecipes" 
+     [routerLink]="['/recipes', recipe.id]" 
+     class="list-group-item list-group-item-action text-capitalize">
+    {{ recipe.name }}
+  </a>
 </div>

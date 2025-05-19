@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './recipe-detail.component.css'
 })
 export class RecipeDetailComponent implements OnInit {
-   recipe: Recipe | null = null;
+  recipe: Recipe | null = null;
   ingredients: Ingredient[] = [];
   error = '';
   loading = false;

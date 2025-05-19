@@ -1,10 +1,13 @@
 body {
   background-color: #f8f9fa;
   font-family: 'Segoe UI', sans-serif;
+  text-transform: capitalize;
+
 }
 
 .card {
   border-radius: 1rem;
+  
 }
 
 .btn-success {
@@ -15,3 +18,4 @@ body {
 .form-control {
   border-radius: 0.5rem;
 }
+
