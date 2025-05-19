@@ -4,6 +4,14 @@ body {
 }
 
 .card {
-  border: none;
   border-radius: 1rem;
+}
+
+.btn-success {
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+.form-control {
+  border-radius: 0.5rem;
 }
