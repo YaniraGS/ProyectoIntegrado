@@ -9,6 +9,7 @@ import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import {  HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     FavoritesComponent,
-    RecipesComponent
+    RecipesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
