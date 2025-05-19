@@ -1,0 +1,16 @@
+.recipe-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.recipe-link {
+  font-weight: bold;
+  text-decoration: none;
+  color: #2c3e50;
+}
+
+.recipe-link:hover {
+  text-decoration: underline;
+}

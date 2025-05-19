@@ -10,6 +10,7 @@ import { RecipesComponent } from './pages/recipes/recipes.component';
 import {  HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     RegisterComponent,
     FavoritesComponent,
     RecipesComponent,
-    NavbarComponent
+    NavbarComponent,
+    RecipeDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,11 @@
-<p>recipes works!</p>
+<div *ngIf="loading">Cargando recetas...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error">
+  <div *ngFor="let recipe of recipes" class="recipe-item">
+    
+    <a [routerLink]="['/recipes', recipe.id]" class="recipe-link">
+      {{ recipe.name }}
+    </a>
+  </div>
+</div>

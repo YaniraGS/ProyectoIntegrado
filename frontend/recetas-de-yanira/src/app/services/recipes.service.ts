@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Receta {
+export interface Recipe {
   id: number;
   name: string;
   category: string;
@@ -14,25 +14,31 @@ export interface Receta {
   totalTime: number;
 }
 
+export interface Ingredient {
+  id: number;
+  name: string;
+  quantity?: number;
+  unit?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class RecetasService {
+export class RecipesService {
   private apiUrl = 'http://localhost:3000/recipes';
 
   constructor(private http: HttpClient) {}
 
-  getRecetas(filtros: { name?: string; ingredients?: string[] } = {}): Observable<Receta[]> {
-    let params = new HttpParams();
-
-    if (filtros.name) {
-      params = params.set('name', filtros.name);
-    }
-
-    if (filtros.ingredients && filtros.ingredients.length > 0) {
-      params = params.set('ingredients', filtros.ingredients.join(','));
-    }
-
-    return this.http.get<Receta[]>(this.apiUrl, { params });
+  getRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(this.apiUrl);
   }
+
+  getRecipeById(id: number): Observable<Recipe> {
+  return this.http.get<Recipe>(`${this.apiUrl}/${id}`);
+}
+
+getIngredientsByRecipe(recipeId: number): Observable<Ingredient[]> {
+  return this.http.get<Ingredient[]>(`${this.apiUrl}/${recipeId}/ingredients`);
+}
+
 }

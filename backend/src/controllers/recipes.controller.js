@@ -20,3 +20,21 @@ export const getRecipeById = async (req, res) => {
      res.json(rows[0]);
    
   };
+
+export const getIngredientsByRecipe = async (req, res) => {
+  const recipeId = req.params.id;
+
+  try {
+    const result = await pool.query(`
+      SELECT i.name, ri.quantity
+      FROM recipe_ingredients ri
+      JOIN ingredients i ON ri.ingredient_id = i.id
+      WHERE ri.recipe_id = $1
+    `, [recipeId]);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error al obtener ingredientes:', err);
+    res.status(500).json({ error: 'Error al obtener ingredientes de la receta' });
+  }
+};

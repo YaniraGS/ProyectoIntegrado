@@ -1,0 +1,17 @@
+<div *ngIf="loading">Cargando receta...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="recipe">
+  <h2>{{ recipe.name }}</h2>
+
+  <h3>Pasos</h3>
+  <p>{{ recipe.steps }}</p>
+
+  <h3>Ingredientes</h3>
+  <ul>
+    <li *ngFor="let ing of ingredients">
+      {{ ing.name }}
+      <span *ngIf="ing.quantity"> - {{ ing.quantity }}</span>
+    </li>
+  </ul>
+</div>
