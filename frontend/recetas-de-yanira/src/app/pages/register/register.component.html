@@ -1,1 +1,11 @@
-<p>register works!</p>
+<h2>Registro</h2>
+
+<form (ngSubmit)="register()" #registerForm="ngForm">
+  <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+  <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña" required />
+  <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmar Contraseña" required />
+
+  <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+
+  <p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
+</form>

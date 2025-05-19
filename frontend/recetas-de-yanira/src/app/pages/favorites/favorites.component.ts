@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './favorites.component.css'
 })
 export class FavoritesComponent {
+  ngOnInit(): void {
+    console.log('FavoritesComponent cargado');
+  }
 
 }
