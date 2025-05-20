@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ShoppingListComponent } from './pages/shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HomeComponent } from './pages/home/home.component';
     RecipesComponent,
     NavbarComponent,
     RecipeDetailComponent,
-    HomeComponent
+    HomeComponent,
+    ShoppingListComponent
   ],
   imports: [
     BrowserModule,
