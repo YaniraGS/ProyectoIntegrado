@@ -17,11 +17,12 @@ app.use(cors({
 dotenv.config();
 
 app.use(express.json());
-app.use(usersRoutes);
-app.use(recipeRoutes);
-app.use(ingredientsRoutes);
-app.use(favoritesRoutes);
-app.use(recipeIngredientsRoutes);
+app.use('/users', usersRoutes);
+app.use('/recipes', recipeRoutes);
+app.use('/ingredients', ingredientsRoutes);
+app.use('/favorites', favoritesRoutes);
+app.use('/recipe-ingredients', recipeIngredientsRoutes);
+
 
 app.listen(PORT);
 

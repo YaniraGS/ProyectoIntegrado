@@ -11,6 +11,7 @@ import {  HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.compo
     FavoritesComponent,
     RecipesComponent,
     NavbarComponent,
-    RecipeDetailComponent
+    RecipeDetailComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

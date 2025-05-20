@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { createRecipe, getRecipeById, getRecipes,getIngredientsByRecipe } from "../controllers/recipes.controller.js";
+import { createRecipe, getRecipeById, getRecipes,getIngredientsByRecipe, getRecipesByIngredient } from "../controllers/recipes.controller.js";
 
 const router = Router();
 
-router.get('/recipes',getRecipes);
-router.get ('/recipes/:id', getRecipeById);
-router.post('/recipes', createRecipe);
-router.get('/recipes/:id/ingredients', getIngredientsByRecipe);
-
+router.get('/',getRecipes);
+router.post('/', createRecipe);
+router.get('/:id/ingredients', getIngredientsByRecipe);
+router.get('/search-by-ingredient', getRecipesByIngredient);
+router.get ('/:id', getRecipeById);
 
 export default router;

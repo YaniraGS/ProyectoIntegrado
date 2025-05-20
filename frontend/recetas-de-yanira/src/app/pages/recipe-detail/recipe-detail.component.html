@@ -1,16 +1,30 @@
-<div *ngIf="recipe" class="card my-3">
-  <div class="card-body">
-    <h2 class="card-title">{{ recipe.name }}</h2>
+<div class="container mt-4">
 
-    <h4>Ingredientes:</h4>
-    <ul class="list-group mb-3">
-      <li *ngFor="let ing of ingredients" class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="text-capitalize">{{ ing.name }}</span>
-        <span class="badge bg-primary rounded-pill text-capitalize">{{ ing.quantity }}</span>
-      </li>
-    </ul>
-
-    <h4>Pasos:</h4>
-    <p>{{ recipe.steps }}</p>
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando receta...</p>
   </div>
-</div>
+
+  <div *ngIf="!loading && error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && recipe" class="card shadow rounded border-0">
+    <div class="card-header bg-success text-white">
+      <h2 class="mb-0">{{ recipe.name }}</h2>
+    </div>
+    <div class="card-body">
+      <h4 class="mb-3">Ingredientes:</h4>
+      <ul class="list-group mb-4">
+        <li *ngFor="let ing of ingredients" class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="text-capitalize">{{ ing.name }}</span>
+          <span class="badge bg-primary rounded-pill text-capitalize">{{ ing.quantity }}</span>
+        </li>
+      </ul>
+
+      <h4 class="mb-2">Pasos:</h4>
+      <p class="text-muted">{{ recipe.steps }}</p>
+
+      <a class="btn btn-outline-success mt-3" routerLink="/recipes">←

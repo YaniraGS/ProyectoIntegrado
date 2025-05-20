@@ -1,27 +1,36 @@
-<div class="mb-3 d-flex justify-content-center">
-  <div class="input-group" style="max-width: 400px; width: 100%;">
-    <span class="input-group-text" id="search-icon">
-      <i class="bi bi-search"></i> <!-- ícono lupa -->
-    </span>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Buscar por nombre o ingrediente..."
-      aria-label="Buscar"
-      aria-describedby="search-icon"
-      [(ngModel)]="searchTerm"
-      (input)="filterRecipes()"
-    />
+<div class="container mt-4">
+  <h2 class="text-success mb-4">Recetas</h2>
+
+  <div class="input-group mb-3">
+    <input [(ngModel)]="searchTerm" type="text" class="form-control" placeholder="Buscador de Recetas">
+    <button (click)="filterRecipes()" class="btn btn-success">Buscar</button>
   </div>
-</div>
+<input [(ngModel)]="searchTerm" class="form-control mb-2" placeholder="Buscar por ingrediente">
+<button (click)="searchByIngredient()" class="btn btn-success">Buscar</button>
 
-<div *ngIf="loading" class="alert alert-info">Cargando recetas...</div>
-<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-<div *ngIf="!loading && !error" class="list-group">
-  <a *ngFor="let recipe of filteredRecipes" 
-     [routerLink]="['/recipes', recipe.id]" 
-     class="list-group-item list-group-item-action text-capitalize">
-    {{ recipe.name }}
-  </a>
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-warning text-center">
+    {{ error }}
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="!error && !loading">
+    <div class="col" *ngFor="let recipe of filteredRecipes.length ? filteredRecipes : recipes">
+      <div class="card h-100 border-success shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a [routerLink]="['/recipes', recipe.id]" class="text-success text-decoration-none">
+              {{ recipe.name }}
+            </a>
+          </h5>
+          <p class="card-text">{{ recipe.category }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

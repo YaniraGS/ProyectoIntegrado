@@ -38,3 +38,28 @@ export const getIngredientsByRecipe = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener ingredientes de la receta' });
   }
 };
+
+export const getRecipesByIngredient = async (req, res) => {
+  console.log("Entró a getRecipesByIngredient con query:", req.query);
+  const { name } = req.query;
+  if (!name) return res.status(400).json({ message: 'El parámetro "name" es requerido' });
+
+  try {const query = `
+      SELECT r.*
+      FROM recipes r
+      JOIN recipe_ingredients ri ON r.id = ri.recipe_id
+      JOIN ingredients i ON i.id = ri.ingredient_id
+      WHERE i.name ILIKE '%' || $1 || '%'
+      GROUP BY r.id;
+    `;
+
+    const { rows } = await pool.query(query, [name]);
+
+    if (rows.length === 0) return res.status(404).json({ message: 'No se encontraron recetas para ese ingrediente' });
+
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
