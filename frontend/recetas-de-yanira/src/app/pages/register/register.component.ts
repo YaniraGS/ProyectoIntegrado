@@ -24,7 +24,7 @@ export class RegisterComponent {
 
     this.authService.register(this.email, this.password).subscribe({
       next: () => this.router.navigate(['/login']),
-      error: () => this.errorMessage = 'Error al registrarse'
+      error: () => this.errorMessage = 'Error al registrarse. El correo electronico ya existe'
     });
   }
 }

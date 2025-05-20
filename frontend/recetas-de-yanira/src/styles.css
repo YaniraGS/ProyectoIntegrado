@@ -1,7 +1,7 @@
 body {
   background-color: #B7E4C7 !important;
   font-family: 'Segoe UI', sans-serif;
-  text-transform: capitalize;
+  text-transform:initial uppercase;
 
 }
 
