@@ -6,7 +6,9 @@
   justify-content: space-between;
   align-items: center;
 }
-
+.bg-success{
+  color: #ff6b6b;
+}
 .logo {
   font-weight: bold;
   font-size: 1.2rem;

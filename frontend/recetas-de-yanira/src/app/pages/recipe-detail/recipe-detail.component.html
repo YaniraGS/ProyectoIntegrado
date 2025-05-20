@@ -25,6 +25,9 @@
       </ul>
 
       <h4 class="mb-2">Pasos:</h4>
-      <p class="text-muted">{{ recipe.steps }}</p>
-
+      <ol *ngIf="stepsArray.length > 0">
+        <li *ngFor="let step of stepsArray">
+          {{ step }}
+        </li>
+      </ol>
       <a class="btn btn-outline-success mt-3" routerLink="/recipes">←

@@ -12,7 +12,8 @@ export class RecipesComponent implements OnInit {
   filteredRecipes: Recipe[] = [];
   loading = false;
   error = '';
-  searchTerm = '';
+  searchRecipe= '';
+  searchIngredient='';
 
 
   constructor(private recipeService: RecipesService) {}
@@ -32,21 +33,21 @@ export class RecipesComponent implements OnInit {
   }
 
   filterRecipes() {
-    const term = this.searchTerm.toLowerCase();
+    const term = this.searchRecipe.toLowerCase();
     this.filteredRecipes = this.recipes.filter(recipe => {
       const nameMatch = recipe.name.toLowerCase().includes(term);
       return nameMatch;
     });
-     this.error = this.filteredRecipes.length === 0 && this.searchTerm.trim() !== ''
+     this.error = this.filteredRecipes.length === 0 && this.searchRecipe.trim() !== ''
     ? 'No se encontraron recetas con ese nombre.'
     : '';
 }
 
 searchByIngredient() {
-  if (this.searchTerm.trim() === '') return;
+  if (this.searchIngredient.trim() === '') return;
 
   this.loading = true;
-  this.recipeService.getRecipesByIngredient(this.searchTerm).subscribe({
+  this.recipeService.getRecipesByIngredient(this.searchIngredient).subscribe({
     next: (data) => {
       this.filteredRecipes = data;
       this.loading = false;

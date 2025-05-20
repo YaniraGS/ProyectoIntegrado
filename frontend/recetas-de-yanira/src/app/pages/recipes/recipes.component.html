@@ -2,12 +2,14 @@
   <h2 class="text-success mb-4">Recetas</h2>
 
   <div class="input-group mb-3">
-    <input [(ngModel)]="searchTerm" type="text" class="form-control" placeholder="Buscador de Recetas">
+    <input [(ngModel)]="searchRecipe" type="text" class="form-control" placeholder="Buscador de Recetas" (keyup.enter)="filterRecipes()">
     <button (click)="filterRecipes()" class="btn btn-success">Buscar</button>
   </div>
-<input [(ngModel)]="searchTerm" class="form-control mb-2" placeholder="Buscar por ingrediente">
-<button (click)="searchByIngredient()" class="btn btn-success">Buscar</button>
+  <div class="input-group mb-3">
+    <input [(ngModel)]="searchIngredient" class="form-control mb-2" placeholder="Buscar Recetas por Ingrediente" (keyup.enter)="searchByIngredient()">
 
+    <button (click)="searchByIngredient()" class="btn btn-success">Buscar</button>
+  </div>
 
   <div *ngIf="loading" class="text-center">
     <div class="spinner-border text-success" role="status">

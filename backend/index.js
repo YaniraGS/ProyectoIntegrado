@@ -17,7 +17,7 @@ app.use(cors({
 dotenv.config();
 
 app.use(express.json());
-app.use('/users', usersRoutes);
+app.use( usersRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/ingredients', ingredientsRoutes);
 app.use('/favorites', favoritesRoutes);

@@ -13,11 +13,13 @@ export class RecipeDetailComponent implements OnInit {
   ingredients: Ingredient[] = [];
   error = '';
   loading = false;
+  stepsArray: string[] = [];
+
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipesService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -28,6 +30,13 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeService.getRecipeById(recipeId).subscribe({
         next: (data) => {
           this.recipe = data;
+          if (this.recipe && this.recipe.steps) {
+            this.stepsArray = this.recipe.steps
+              .split(/\d+\.\s*/)    
+              .filter(step => step.trim().length > 0);  
+          } else {
+            this.stepsArray = [];
+          }
           this.loading = false;
         },
         error: () => {
