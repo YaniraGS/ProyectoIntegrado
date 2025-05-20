@@ -12,22 +12,29 @@
   </div>
 
   <div *ngIf="!loading && recipe" class="card shadow rounded border-0">
-    <div class="card-header bg-success text-white">
+    <div class="card-header bg-success text-white d-flex align-items-center justify-content-between">
       <h2 class="mb-0">{{ recipe.name }}</h2>
+      <div>
+        <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToFavorites(recipe.id)">
+          Añadir a favoritos
+        </button>
+        <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToShoppingList()">Añadir a la lista de la compra</button>
+        <a class="btn btn-outline-light" routerLink="/recipes">Volver</a>
+      </div>
     </div>
     <div class="card-body">
-      <h4 class="mb-3">Ingredientes:</h4>
-      <ul class="list-group mb-4">
-        <li *ngFor="let ing of ingredients" class="list-group-item d-flex justify-content-between align-items-center">
-          <span class="text-capitalize">{{ ing.name }}</span>
-          <span class="badge bg-primary rounded-pill text-capitalize">{{ ing.quantity }}</span>
-        </li>
-      </ul>
+      <div class="card-body">
+        <h4 class="mb-3">Ingredientes:</h4>
+        <ul class="list-group mb-4">
+          <li *ngFor="let ing of ingredients" class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="text-capitalize">{{ ing.name }}</span>
+            <span class="badge bg-primary rounded-pill text-capitalize">{{ ing.quantity }}</span>
+          </li>
+        </ul>
 
-      <h4 class="mb-2">Pasos:</h4>
-      <ol *ngIf="stepsArray.length > 0">
-        <li *ngFor="let step of stepsArray">
-          {{ step }}
-        </li>
-      </ol>
-      <a class="btn btn-outline-success mt-3" routerLink="/recipes">←
+        <h4 class="mb-2">Pasos:</h4>
+        <ol *ngIf="stepsArray.length > 0">
+          <li *ngFor="let step of stepsArray">
+            {{ step }}
+          </li>
+        </ol>

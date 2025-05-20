@@ -20,7 +20,13 @@
           <a class="nav-link" routerLink="/favorites" routerLinkActive="active">Favoritos</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" routerLink="/shopping-list" routerLinkActive="active">Lista de la compra</a>
+          <a class="nav-link d-flex align-items-center" routerLink="/shopping-list" routerLinkActive="active">
+            <i class="bi bi-cart"></i>&nbsp;
+            Lista de la compra
+            <span *ngIf="getShoppingListCount() > 0" class="badge bg-warning text-dark ms-2">
+              {{ getShoppingListCount() }}
+            </span>
+          </a>
         </li>
       </ul>
 

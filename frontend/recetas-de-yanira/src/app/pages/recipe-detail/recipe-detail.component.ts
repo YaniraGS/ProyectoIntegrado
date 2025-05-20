@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient, Recipe, RecipesService } from '../../services/recipes.service';
 import { ActivatedRoute } from '@angular/router';
+import { ShoppingListService } from '../../services/shopping-list.service';
+import { AuthService } from '../../services/auth.service';
+import { FavoritesService } from '../../services/favorites.service';
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,7 +22,12 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipesService
+    private recipeService: RecipesService,
+    private shoppingListService: ShoppingListService,
+    private authService: AuthService,
+    private favoritesService: FavoritesService
+
+
   ) { }
 
   ngOnInit(): void {
@@ -32,8 +41,8 @@ export class RecipeDetailComponent implements OnInit {
           this.recipe = data;
           if (this.recipe && this.recipe.steps) {
             this.stepsArray = this.recipe.steps
-              .split(/\d+\.\s*/)    
-              .filter(step => step.trim().length > 0);  
+              .split(/\d+\.\s*/)
+              .filter(step => step.trim().length > 0);
           } else {
             this.stepsArray = [];
           }
@@ -51,4 +60,19 @@ export class RecipeDetailComponent implements OnInit {
       });
     }
   }
-}
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+  addToShoppingList() {
+    if (this.ingredients && this.recipe) {
+      this.shoppingListService.addIngredients(this.ingredients.map(ingredient => ingredient.name));
+    }
+  }
+
+  addToFavorites(recipeId: number) {
+  this.favoritesService.addFavorite(recipeId).subscribe({
+    next: () => alert('Añadido a favoritos!'),
+    error: () => alert('Error al añadir a favoritos')
+  });
+}}

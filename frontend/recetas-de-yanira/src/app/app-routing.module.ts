@@ -6,6 +6,7 @@ import { RecipesComponent } from './pages/recipes/recipes.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ShoppingListComponent } from './pages/shopping-list/shopping-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'favorites', component: FavoritesComponent,  },
   { path: 'recipes/:id', component: RecipeDetailComponent },
   { path: 'recipes', component: RecipesComponent },
+  {path: 'shopping-list', component: ShoppingListComponent},
   { path: '**', redirectTo: '' }];
 
 @NgModule({
