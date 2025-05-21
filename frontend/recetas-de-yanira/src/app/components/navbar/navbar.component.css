@@ -17,3 +17,8 @@
   margin-left: 1rem;
   font-weight: 500;
 }
+
+.bg-custom-warning {
+  background-color: #ee8b4d; 
+  color: #212529; 
+}

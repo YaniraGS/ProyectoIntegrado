@@ -18,6 +18,8 @@ export class RecipeDetailComponent implements OnInit {
   error = '';
   loading = false;
   stepsArray: string[] = [];
+  showModal=false;
+  showErrorModal=false;
 
 
   constructor(
@@ -72,7 +74,14 @@ export class RecipeDetailComponent implements OnInit {
 
   addToFavorites(recipeId: number) {
   this.favoritesService.addFavorite(recipeId).subscribe({
-    next: () => alert('Añadido a favoritos!'),
-    error: () => alert('Error al añadir a favoritos')
+    next: () => this.showModal=true,
+    error: () => this.showErrorModal=true,
   });
-}}
+}
+
+closeModal(){
+  this.showModal=false;
+  this.showErrorModal=false;
+}
+
+}
