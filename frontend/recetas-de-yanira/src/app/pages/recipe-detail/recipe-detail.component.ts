@@ -58,8 +58,8 @@ export class RecipeDetailComponent implements OnInit {
 
       this.recipeService.getIngredientsByRecipe(recipeId).subscribe({
         next: (data) => this.ingredients = data,
-        error: () => this.error = 'Error cargando ingredientes'
-      });
+  error: () => this.error = 'Error cargando ingredientes'
+});
     }
   }
 

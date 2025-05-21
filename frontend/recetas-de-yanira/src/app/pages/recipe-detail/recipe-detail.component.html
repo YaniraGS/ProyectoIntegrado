@@ -36,7 +36,9 @@
             <li *ngFor="let ing of ingredients"
               class="list-group-item d-flex justify-content-between align-items-center">
               <span class="text-capitalize">{{ ing.name }}</span>
-              <span class="badge rounded-pill bg-custom text-capitalize">{{ ing.quantity }}</span>
+              <span class="badge rounded-pill bg-custom text-capitalize">
+                {{ ing.quantity }} {{ ing.units }}
+              </span>
             </li>
           </ul>
 
@@ -47,33 +49,33 @@
         </div>
       </div>
 
-<div class="modal-backdrop fade show" *ngIf="showModal"></div>
-<div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-success">¡Receta añadida a favoritos!</h5>
+      <div class="modal-backdrop fade show" *ngIf="showModal"></div>
+      <div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-success">¡Receta añadida a favoritos!</h5>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-success" (click)="closeModal()">Volver</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" (click)="closeModal()">Volver</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="modal-backdrop fade show" *ngIf="showErrorModal"></div>
-<div class="modal fade show d-block" *ngIf="showErrorModal" tabindex="-1" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-success">Error al añadir la receta</h5>
+      <div class="modal-backdrop fade show" *ngIf="showErrorModal"></div>
+      <div class="modal fade show d-block" *ngIf="showErrorModal" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-success">Error al añadir la receta</h5>
+            </div>
+            <div class="modal-body ">
+              <p>Receta ya añadida a favoritos</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-success" (click)="closeModal()">Volver</button>
+            </div>
+          </div>
+        </div>
       </div>
-       <div class="modal-body ">
-        <p>Receta ya añadida a favoritos</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" (click)="closeModal()">Volver</button>
-      </div>
-    </div>
-  </div>
-</div>

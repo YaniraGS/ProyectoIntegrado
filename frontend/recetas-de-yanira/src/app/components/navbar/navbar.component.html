@@ -20,8 +20,14 @@
         </li>
 
         <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" routerLink="/favorites" routerLinkActive="active">Favoritos</a>
+          <a class="nav-link" routerLink="/favorites" routerLinkActive="active"> <i
+              class="bi bi-star"></i>&nbsp;Favoritos
+            <span *ngIf="favoritesCount > 0" class="badge bg-custom-warning text-dark ms-2">
+      {{ favoritesCount }}
+            </span>
+          </a>
         </li>
+
         <li class="nav-item" *ngIf="isLoggedIn()">
           <a class="nav-link d-flex align-items-center" routerLink="/shopping-list" routerLinkActive="active">
             <i class="bi bi-cart"></i>&nbsp;
@@ -36,15 +42,16 @@
       <ul class="navbar-nav ms-auto">
         <ng-container *ngIf="!isLoggedIn()">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
+            <a class="nav-link" routerLink="/login"><i class="bi bi-box-arrow-in-right"></i>&nbsp;Iniciar Sesión</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/register">Registrarse</a>
+            <a class="nav-link" routerLink="/register"><i class="bi bi-person-plus"></i>&nbsp;Registrarse</a>
           </li>
         </ng-container>
 
         <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" (click)="logout()" style="cursor: pointer;">Cerrar Sesión</a>
+          <a class="nav-link" (click)="logout()" style="cursor: pointer;"><i class="bi bi-box-arrow-right"></i>&nbsp;
+            Cerrar Sesión</a>
         </li>
       </ul>
     </div>
