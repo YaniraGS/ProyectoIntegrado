@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   errorMessage = '';
@@ -26,25 +26,22 @@ export class LoginComponent {
 
 
   login() {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
+  
+  const email = this.loginForm.get('email')?.value;
+  const password = this.loginForm.get('password')?.value;
+
+  this.authService.login(email, password).subscribe({
+    next: (res) => {
+      this.authService.setSession(res.token, res.user);
+      this.router.navigate(['/']);
+    },
+    error: (err) => {
+      this.errorMessage = 'Email o contraseña incorrectos';
+      console.error(err);
     }
-
-    const { email, password } = this.loginForm.value;
-
-    this.authService.login(email, password).subscribe({
-      next: (res) => {
-        this.authService.setSession(res.token, res.user);
-        this.router.navigate(['/']);
-      },
-      error: (err) => {
-        this.errorMessage = 'Email o contraseña incorrectos';
-        console.error(err);
-      }
-    });
-  }
-
+  });
+  
+}
   get f() {
   return this.loginForm.controls;
 }

@@ -25,13 +25,14 @@ import { ShoppingListComponent } from './pages/shopping-list/shopping-list.compo
     RecipeDetailComponent,
     HomeComponent,
     ShoppingListComponent,
-    ReactiveFormsModule,
+  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
+    FormsModule, 
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
