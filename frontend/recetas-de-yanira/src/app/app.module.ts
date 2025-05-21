@@ -8,7 +8,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import {  HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -24,7 +24,8 @@ import { ShoppingListComponent } from './pages/shopping-list/shopping-list.compo
     NavbarComponent,
     RecipeDetailComponent,
     HomeComponent,
-    ShoppingListComponent
+    ShoppingListComponent,
+    ReactiveFormsModule,
   ],
   imports: [
     BrowserModule,

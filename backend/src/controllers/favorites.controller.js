@@ -1,7 +1,6 @@
 import { pool } from "../../db.js";
 
 export const addRecipeToFavorite = async (req, res) => {
-  console.log('req.user:', req.user); 
   const userId = req.user.id;        // viene del token
   const { recipeId } = req.body;
 

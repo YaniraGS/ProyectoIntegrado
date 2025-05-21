@@ -13,3 +13,16 @@
   text-decoration: underline;
   color: #0a58ca;
 }
+
+.recipe-image {
+  width: 100%; /* Ocupa todo el ancho disponible de la tarjeta */
+  height: 200px; /* Define una altura fija para todas las imágenes */
+  object-fit: cover; /* Recorta la imagen para que cubra el área sin distorsionar */
+  /* Otras opciones para object-fit:
+     - contain: Escala la imagen para que encaje completamente, mostrando barras si es necesario.
+     - fill: Estira/comprime la imagen para rellenar el área (puede distorsionar).
+     - none: La imagen no se escala.
+     - scale-down: Compara 'none' y 'contain' y usa la más pequeña.
+  */
+  display: block; /* Asegura que la imagen se comporte como un bloque para un control total de su tamaño */
+}

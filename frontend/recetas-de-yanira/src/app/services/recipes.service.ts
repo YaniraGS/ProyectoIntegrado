@@ -12,6 +12,7 @@ export interface Recipe {
   cookingTime:number;
   steps: string;
   totalTime: number;
+  image: string;
 }
 
 export interface Ingredient {

@@ -1,13 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm py-1">
   <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/">Recetas de Yanira</a>
+    <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/">
+      <img src="assets/images/logo.png" alt="Logo" style="height: 30px;" class="me-2">
+      Recetas de Yanira
+    </a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Menú principal a la izquierda -->
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/">Inicio</a>
@@ -30,9 +33,7 @@
         </li>
       </ul>
 
-      <!-- Menú a la derecha -->
       <ul class="navbar-nav ms-auto">
-        <!-- Mostrar solo si NO está logueado -->
         <ng-container *ngIf="!isLoggedIn()">
           <li class="nav-item">
             <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
@@ -42,7 +43,6 @@
           </li>
         </ng-container>
 
-        <!-- Mostrar solo si está logueado -->
         <li class="nav-item" *ngIf="isLoggedIn()">
           <a class="nav-link" (click)="logout()" style="cursor: pointer;">Cerrar Sesión</a>
         </li>

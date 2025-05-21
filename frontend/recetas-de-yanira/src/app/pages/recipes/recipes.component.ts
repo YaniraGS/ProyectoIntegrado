@@ -24,6 +24,7 @@ export class RecipesComponent implements OnInit {
       next: (data) => {
         this.recipes = data;
         this.loading = false;
+        
       },
       error: (err) => {
         this.error = 'Error cargando recetas';
@@ -63,6 +64,6 @@ searchByIngredient() {
     }
   });
 }
-
+ 
 }
 
