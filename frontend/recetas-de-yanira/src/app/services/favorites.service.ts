@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Recipe } from './recipes.service';
 
 @Injectable({
@@ -9,7 +9,13 @@ import { Recipe } from './recipes.service';
 export class FavoritesService {
   private apiUrl = 'http://localhost:3000/favorites'; // ruta base para favoritos
 
-  constructor(private http: HttpClient) {}
+
+  private favoritesCountSubject = new BehaviorSubject<number>(0);
+  favoritesCount$ = this.favoritesCountSubject.asObservable();
+
+
+  constructor(private http: HttpClient) {
+  }
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -18,18 +24,30 @@ export class FavoritesService {
     });
   }
 
+
   addFavorite(recipeId: number): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(this.apiUrl, { recipeId }, { headers });
+    return this.http.post(this.apiUrl, { recipeId }, { headers }).pipe(
+      tap(() => this.updateFavoritesCount())
+    );
   }
 
   getFavorites(): Observable<Recipe[]> {
     const headers = this.getAuthHeaders();
-    return this.http.get<Recipe[]>(this.apiUrl, { headers });
+    return this.http.get<Recipe[]>(this.apiUrl, { headers }).pipe(
+      tap(favorites => this.favoritesCountSubject.next(favorites.length))
+    );
   }
 
   removeFavorite(recipeId: number): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.delete(this.apiUrl, { headers, body: { recipeId } });
+    return this.http.delete(this.apiUrl, { headers, body: { recipeId } }).pipe(
+      tap(() => this.updateFavoritesCount())
+    );
   }
+
+  private updateFavoritesCount() {
+    this.getFavorites().subscribe(); 
+  }
+
 }
