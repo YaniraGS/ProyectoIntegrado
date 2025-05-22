@@ -24,10 +24,33 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="d-flex flex-column flex-md-row gap-4 align-items-center align-items-md-start">
+      <div class="d-flex flex-column flex-md-row gap-4 align-items-start">
 
-        <div class="flex-shrink-0">
-          <img [src]="'assets/' + recipe.image" class="recipe-image" alt="{{ recipe.name }}">
+        <div class="flex-shrink-0 d-flex flex-column align-items-center align-items-md-start" style="min-width: 220px;">
+          <img [src]="'assets/' + recipe.image" class="recipe-image mb-3" alt="{{ recipe.name }}">
+
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <label for="servings" class="mb-0 text-success">
+              <h5 class="mb-0 text-success text-decoration-none">Comensales:</h5>
+            </label>
+            <input id="servings" type="number" [(ngModel)]="selectedServings" [min]="1"
+              class="form-control form-control-sm" style="width: 60px;" />
+          </div>
+
+          <div class="mb-3 text-muted d-flex gap-3 flex-wrap">
+            <div>
+              <i class="bi bi-clock text-success me-1"></i>
+              <strong>Preparación:</strong> {{ recipe.preparation_time || 0 }} min
+            </div>
+            <div>
+              <i class="bi bi-fire text-danger me-1"></i>
+              <strong>Cocción:</strong> {{ recipe.cooking_time }} min
+            </div>
+            <div *ngIf="recipe.total_time">
+              <i class="bi bi-hourglass-split text-warning me-1"></i>
+              <strong>Total:</strong> {{ recipe.total_time }} min
+            </div>
+          </div>
         </div>
 
         <div class="flex-grow-1 d-flex flex-column justify-content-center">
@@ -37,7 +60,7 @@
               class="list-group-item d-flex justify-content-between align-items-center">
               <span class="text-capitalize">{{ ing.name }}</span>
               <span class="badge rounded-pill bg-custom text-capitalize">
-                {{ ing.quantity }} {{ ing.units }}
+                {{ getAdjustedQuantity(ing) }} {{ ing.units }}
               </span>
             </li>
           </ul>
@@ -47,7 +70,9 @@
             <li *ngFor="let step of stepsArray">{{ step }}</li>
           </ol>
         </div>
+
       </div>
+
 
       <div class="modal-backdrop fade show" *ngIf="showModal"></div>
       <div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" aria-modal="true" role="dialog">

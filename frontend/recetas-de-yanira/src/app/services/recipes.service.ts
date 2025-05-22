@@ -8,10 +8,10 @@ export interface Recipe {
   category: string;
   cuisineType: string;
   servings: number;
-  preparationTime: number;
-  cookingTime:number;
+  preparation_time: number;
+  cooking_time:number;
   steps: string;
-  totalTime: number;
+  total_time: number;
   image: string;
 }
 

@@ -18,8 +18,10 @@ export class RecipeDetailComponent implements OnInit {
   error = '';
   loading = false;
   stepsArray: string[] = [];
-  showModal=false;
-  showErrorModal=false;
+  showModal = false;
+  showErrorModal = false;
+  selectedServings: number = 0;
+
 
 
   constructor(
@@ -41,6 +43,7 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeService.getRecipeById(recipeId).subscribe({
         next: (data) => {
           this.recipe = data;
+          this.selectedServings = data.servings;
           if (this.recipe && this.recipe.steps) {
             this.stepsArray = this.recipe.steps
               .split(/\d+\.\s*/)
@@ -49,23 +52,33 @@ export class RecipeDetailComponent implements OnInit {
             this.stepsArray = [];
           }
           this.loading = false;
+          console.log('Receta cargada:', this.recipe);
         },
         error: () => {
           this.error = 'Error cargando la receta';
           this.loading = false;
         }
       });
+      
 
       this.recipeService.getIngredientsByRecipe(recipeId).subscribe({
-        next: (data) => this.ingredients = data,
-  error: () => this.error = 'Error cargando ingredientes'
-});
+        next: (data) => {
+          this.ingredients = data;
+        },
+        error: () => this.error = 'Error cargando ingredientes'
+      });
     }
+  }
+
+  getAdjustedQuantity(ingredient: Ingredient):number | null {
+    if (!this.recipe || !ingredient.quantity) return null;
+    return (ingredient.quantity * this.selectedServings) / this.recipe.servings;
   }
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
+
   addToShoppingList() {
     if (this.ingredients && this.recipe) {
       this.shoppingListService.addIngredients(this.ingredients.map(ingredient => ingredient.name));
@@ -73,15 +86,15 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   addToFavorites(recipeId: number) {
-  this.favoritesService.addFavorite(recipeId).subscribe({
-    next: () => this.showModal=true,
-    error: () => this.showErrorModal=true,
-  });
-}
+    this.favoritesService.addFavorite(recipeId).subscribe({
+      next: () => this.showModal = true,
+      error: () => this.showErrorModal = true,
+    });
+  }
 
-closeModal(){
-  this.showModal=false;
-  this.showErrorModal=false;
-}
+  closeModal() {
+    this.showModal = false;
+    this.showErrorModal = false;
+  }
 
 }
