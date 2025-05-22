@@ -6,7 +6,7 @@ export const getIngredientsByRecipeId = async (req, res) => {
 
     try {
         const { rows } = await pool.query(`
-      SELECT ingredients.id, ingredients.name, ri.quantity, ri.units
+      SELECT  ri.id AS recipe_ingredient_id, ingredients.id, ingredients.name, ri.quantity, ri.units
       FROM recipe_ingredients ri
       JOIN ingredients ON ri.ingredient_id = ingredients.id
       WHERE ri.recipe_id = $1
