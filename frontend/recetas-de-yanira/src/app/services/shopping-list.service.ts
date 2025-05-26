@@ -21,13 +21,6 @@ export class ShoppingListService {
     return this.http.get<ShoppingItem[]>(`${this.apiUrl}/${userId}`);
   }
 
-  addRecipeToShoppingList(userId: number, recipeId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add-recipe`, {
-      userId: userId,
-      recipeId: recipeId
-    });
-  }
-
   deleteItem(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
