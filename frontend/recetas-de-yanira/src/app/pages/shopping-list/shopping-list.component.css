@@ -1,0 +1,48 @@
+.card-header {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.table thead th {
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: #d4edda; 
+  cursor: pointer;
+}
+
+.btn-outline-danger {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.text-muted {
+  font-size: 1.2rem;
+}
+
+.table-responsive table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border-radius: 0.5rem;
+}
+
+.table-responsive thead tr:first-child th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+.table-responsive thead tr:first-child th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+.table-responsive tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+
+.table-responsive tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 0.5rem;
+}
