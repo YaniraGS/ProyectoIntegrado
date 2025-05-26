@@ -85,15 +85,11 @@ export class RecipeDetailComponent implements OnInit {
   }
 
  addToShoppingList(userId: number, recipeId: number): void {
-  this.shoppingListService.addRecipeToShoppingList(userId, recipeId).subscribe({
-    
-    next: res => {
-    },
-    error: err => {
-      console.error('Error añadiendo receta:', err);
-    }
+  this.shoppingListService.addRecipeToShoppingListWithServings(userId, recipeId, this.selectedServings).subscribe({
+    next: res => {},
+    error: err => { console.error('Error añadiendo receta:', err); }
   });
-  }
+}
 
   addToFavorites(recipeId: number) {
     this.favoritesService.addFavorite(recipeId).subscribe({

@@ -46,4 +46,5 @@ getRecipesByIngredient(name: string): Observable<Recipe[]> {
   return this.http.get<Recipe[]>(`${this.apiUrl}/search-by-ingredient?name=${name}`);
 }
 
+
 }

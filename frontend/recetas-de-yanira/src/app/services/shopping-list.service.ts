@@ -35,4 +35,12 @@ export class ShoppingListService {
   clearList(userId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/user/${userId}`);
   }
+
+  addRecipeToShoppingListWithServings(userId: number, recipeId: number, servings: number): Observable<any> {
+  return this.http.post(`${this.apiUrl}/add-recipe`, {
+    userId: userId,
+    recipeId: recipeId,
+    servings: servings
+  });
+}
 }

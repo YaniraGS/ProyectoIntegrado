@@ -1,20 +1,30 @@
 import { pool } from "../../db.js";
 
 export const addRecipeToShoppingList = async (req, res) => {
-  const { userId, recipeId } = req.body;
+  const { userId, recipeId, servings } = req.body;
 
   try {
+    // Primero obtén las cantidades base y las raciones base de la receta
+    const recipeRes = await pool.query(`SELECT servings FROM recipes WHERE id = $1`, [recipeId]);
+    if (recipeRes.rowCount === 0) {
+      return res.status(404).json({ message: 'Receta no encontrada' });
+    }
+    const baseServings = recipeRes.rows[0].servings;
+
     const ingredients = await pool.query(`
       SELECT ingredient_id, quantity, units FROM recipe_ingredients WHERE recipe_id = $1
     `, [recipeId]);
 
     for (const ing of ingredients.rows) {
+      // Calcula cantidad ajustada
+      const adjustedQuantity = (ing.quantity * servings) / baseServings;
+
       await pool.query(`
         INSERT INTO shopping_list (user_id, ingredient_id, quantity, units)
         VALUES ($1, $2, $3, $4)
         ON CONFLICT (user_id, ingredient_id) DO UPDATE
           SET quantity = shopping_list.quantity + EXCLUDED.quantity
-      `, [userId, ing.ingredient_id, ing.quantity, ing.units]);
+      `, [userId, ing.ingredient_id, adjustedQuantity, ing.units]);
     }
 
     res.status(201).json({ message: 'Ingredientes agregados a la lista de la compra' });
@@ -23,6 +33,7 @@ export const addRecipeToShoppingList = async (req, res) => {
     res.status(500).json({ message: 'Error al agregar ingredientes a la lista de la compra' });
   }
 };
+
 
 
 
