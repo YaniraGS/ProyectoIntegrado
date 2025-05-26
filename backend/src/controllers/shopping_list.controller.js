@@ -4,16 +4,17 @@ export const addRecipeToShoppingList = async (req, res) => {
   const { userId, recipeId } = req.body;
 
   try {
-        const ingredients = await pool.query(`
-      SELECT id, quantity, units FROM recipe_ingredients WHERE recipe_id = $1
+    const ingredients = await pool.query(`
+      SELECT ingredient_id, quantity, units FROM recipe_ingredients WHERE recipe_id = $1
     `, [recipeId]);
 
     for (const ing of ingredients.rows) {
       await pool.query(`
-        INSERT INTO shopping_list (user_id, recipe_ingredient_id, quantity, units)
+        INSERT INTO shopping_list (user_id, ingredient_id, quantity, units)
         VALUES ($1, $2, $3, $4)
-        ON CONFLICT (user_id, recipe_ingredient_id) DO UPDATE SET quantity = shopping_list.quantity + EXCLUDED.quantity
-      `, [userId, ing.id, ing.quantity, ing.units]);
+        ON CONFLICT (user_id, ingredient_id) DO UPDATE
+          SET quantity = shopping_list.quantity + EXCLUDED.quantity
+      `, [userId, ing.ingredient_id, ing.quantity, ing.units]);
     }
 
     res.status(201).json({ message: 'Ingredientes agregados a la lista de la compra' });
@@ -32,8 +33,7 @@ export const getShoppingListByUser = async (req, res) => {
     const { rows } = await pool.query(`
       SELECT sl.id, i.name, sl.quantity, sl.units
       FROM shopping_list sl
-      JOIN recipe_ingredients ri ON sl.recipe_ingredient_id = ri.id
-      JOIN ingredients i ON ri.ingredient_id = i.id
+      JOIN ingredients i ON sl.ingredient_id = i.id
       WHERE sl.user_id = $1
     `, [userId]);
 

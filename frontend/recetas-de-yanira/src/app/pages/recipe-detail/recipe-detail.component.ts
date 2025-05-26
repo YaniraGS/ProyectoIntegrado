@@ -85,8 +85,6 @@ export class RecipeDetailComponent implements OnInit {
   }
 
  addToShoppingList(userId: number, recipeId: number): void {
-    console.log('Añadiendo receta con:', { userId, recipeId });
-
   this.shoppingListService.addRecipeToShoppingList(userId, recipeId).subscribe({
     
     next: res => {
