@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../../services/recipes.service';
-import { ShoppingListService } from '../../services/shopping-list.service';
+import { ShoppingItem, ShoppingListService } from '../../services/shopping-list.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -9,19 +10,37 @@ import { ShoppingListService } from '../../services/shopping-list.service';
   styleUrl: './shopping-list.component.css'
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: string[] = [];
+  shoppingList: ShoppingItem[] = [];
+  userId: number = 0;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(
+    private shoppingService: ShoppingListService,
+    private authService: AuthService 
+  ) {}
 
   ngOnInit(): void {
-    this.ingredients = this.shoppingListService.getIngredients();
-  }
-  removeIngredient(ingredient: string) {
-    this.ingredients = this.ingredients.filter(i => i !== ingredient);
+  const user = this.authService.getUser();
+  if (user && user.id) {
+    this.userId = user.id;
+    this.loadList();
+  } 
+}
+
+  loadList(): void {
+    this.shoppingService.getShoppingList(this.userId).subscribe(items => {
+      this.shoppingList = items;
+    });
   }
 
-  clearList() {
-    this.shoppingListService.clearList();
-    this.ingredients = [];
+  deleteItem(id: number): void {
+    this.shoppingService.deleteItem(id).subscribe(() => {
+      this.loadList();
+    });
+  }
+
+  clearList(): void {
+    this.shoppingService.clearList(this.userId).subscribe(() => {
+      this.loadList();
+    });
   }
 }

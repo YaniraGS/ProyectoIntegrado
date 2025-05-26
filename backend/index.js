@@ -23,7 +23,7 @@ app.use('/recipes', recipeRoutes);
 app.use('/ingredients', ingredientsRoutes);
 app.use('/favorites', favoritesRoutes);
 app.use('/recipe-ingredients', recipeIngredientsRoutes);
-app.use('/shopping_list', shoppingListRoutes)
+app.use('/shopping-list', shoppingListRoutes)
 
 
 app.listen(PORT);

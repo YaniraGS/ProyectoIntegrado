@@ -18,7 +18,7 @@
         <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToFavorites(recipe.id)">
           Añadir a favoritos
         </button>
-        <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToShoppingList()">Añadir a la lista
+        <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToShoppingList(userId, recipe.id)">Añadir a la lista
           de la compra</button>
         <a class="btn btn-outline-light" routerLink="/recipes">Volver</a>
       </div>

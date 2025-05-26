@@ -24,7 +24,7 @@ export const login = async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        res.json({ token, user: { id: user.id, email: user.email } });
+        res.json({ token, user: { id: user.uid, email: user.email } });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al iniciar sesión' });

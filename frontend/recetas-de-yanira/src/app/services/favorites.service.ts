@@ -7,7 +7,7 @@ import { Recipe } from './recipes.service';
   providedIn: 'root'
 })
 export class FavoritesService {
-  private apiUrl = 'http://localhost:3000/favorites'; // ruta base para favoritos
+  private apiUrl = 'http://localhost:3000/favorites'; 
 
 
   private favoritesCountSubject = new BehaviorSubject<number>(0);

@@ -1,101 +1,70 @@
 import { pool } from "../../db.js";
 
-export const addIngredientToShoppingList = async (req, res) => {
-  const userId = req.user.id; // viene del token
-  const { recipeIngredientId, quantity } = req.body;
-
-  if (!userId) {
-    return res.status(401).json({ error: 'Usuario no autenticado' });
-  }
-  if (!recipeIngredientId || !quantity) {
-    return res.status(400).json({ error: 'Faltan datos requeridos' });
-  }
+export const addRecipeToShoppingList = async (req, res) => {
+  const { userId, recipeId } = req.body;
 
   try {
-    const insertQuery = `
-      INSERT INTO shopping_list (user_id, recipe_ingredient_id, quantity, units)
-      SELECT $1, id, $2, units
-      FROM recipe_ingredients
-      WHERE id = $3
-      RETURNING *;
-    `;
+        const ingredients = await pool.query(`
+      SELECT id, quantity, units FROM recipe_ingredients WHERE recipe_id = $1
+    `, [recipeId]);
 
-    const { rows } = await pool.query(insertQuery, [userId, quantity, recipeIngredientId]);
-
-    if (rows.length === 0) {
-      return res.status(404).json({ error: 'recipe_ingredient_id no encontrado' });
+    for (const ing of ingredients.rows) {
+      await pool.query(`
+        INSERT INTO shopping_list (user_id, recipe_ingredient_id, quantity, units)
+        VALUES ($1, $2, $3, $4)
+        ON CONFLICT (user_id, recipe_ingredient_id) DO UPDATE SET quantity = shopping_list.quantity + EXCLUDED.quantity
+      `, [userId, ing.id, ing.quantity, ing.units]);
     }
 
-    return res.status(201).json({ message: 'Ingrediente añadido a la lista de la compra', item: rows[0] });
+    res.status(201).json({ message: 'Ingredientes agregados a la lista de la compra' });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Error al añadir ingrediente a la lista de la compra' });
+    res.status(500).json({ message: 'Error al agregar ingredientes a la lista de la compra' });
   }
 };
 
-export const getShoppingList = async (req, res) => {
-  const userId = req.user.id; // viene del token
 
-  if (!userId) {
-    return res.status(401).json({ error: 'Usuario no autenticado' });
-  }
+
+export const getShoppingListByUser = async (req, res) => {
+  const { userId } = req.params;
 
   try {
-    const query = `
-      SELECT sl.id, ri.id AS recipe_ingredient_id, i.name AS ingredient_name,
-             sl.quantity, sl.units,
-             r.name AS recipe_name
+    const { rows } = await pool.query(`
+      SELECT sl.id, i.name, sl.quantity, sl.units
       FROM shopping_list sl
       JOIN recipe_ingredients ri ON sl.recipe_ingredient_id = ri.id
       JOIN ingredients i ON ri.ingredient_id = i.id
-      JOIN recipes r ON ri.recipe_id = r.id
       WHERE sl.user_id = $1
-      ORDER BY sl.id;
-    `;
+    `, [userId]);
 
-    const { rows } = await pool.query(query, [userId]);
-    return res.status(200).json(rows);
-
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Error al obtener la lista de la compra' });
+    res.json(rows);
+  } catch (err) {
+    console.error('Error al obtener la lista de la compra:', err);
+    res.status(500).json({ error: 'Error al obtener la lista de la compra' });
   }
 };
 
-export const removeItemFromShoppingList = async (req, res) => {
-  const userId = req.user.id;  // viene del token
-  const { shoppingListItemId } = req.params;
 
-  if (!userId) {
-    return res.status(401).json({ error: 'Usuario no autenticado' });
-  }
-
-  if (!shoppingListItemId) {
-    return res.status(400).json({ error: 'Falta el id del item a eliminar' });
-  }
+export const deleteShoppingItem = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    // Primero verificamos que el item pertenece al usuario
-    const { rows } = await pool.query(
-      'SELECT * FROM shopping_list WHERE id = $1 AND user_id = $2',
-      [shoppingListItemId, userId]
-    );
-
-    if (rows.length === 0) {
-      return res.status(404).json({ error: 'Item no encontrado o no pertenece al usuario' });
-    }
-
-    // Eliminamos el item
-    await pool.query(
-      'DELETE FROM shopping_list WHERE id = $1 AND user_id = $2',
-      [shoppingListItemId, userId]
-    );
-
-    return res.status(200).json({ message: 'Item eliminado de la lista de la compra' });
-
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Error al eliminar el item de la lista de la compra' });
+    await pool.query(`DELETE FROM shopping_list WHERE id = $1`, [id]);
+    res.status(204).send();
+  } catch (err) {
+    console.error('Error al eliminar ingrediente:', err);
+    res.status(500).json({ error: 'Error al eliminar el ingrediente' });
   }
 };
 
+export const clearShoppingListByUser = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    await pool.query(`DELETE FROM shopping_list WHERE user_id = $1`, [userId]);
+    res.status(204).send();
+  } catch (err) {
+    console.error('Error al vaciar la lista:', err);
+    res.status(500).json({ error: 'Error al vaciar la lista de la compra' });
+  }
+};

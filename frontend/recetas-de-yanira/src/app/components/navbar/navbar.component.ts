@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   favoritesCount: number = 0;
   favoritesSub!: Subscription;
   
-  constructor(public authService: AuthService, private router: Router, private shoppingListService: ShoppingListService,private favoritesService: FavoritesService) {}
+  constructor(public authService: AuthService, private router: Router,private favoritesService: FavoritesService) {}
   
   ngOnInit() {
    this.favoritesSub = this.favoritesService.favoritesCount$.subscribe(count => {
@@ -32,9 +32,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
-getShoppingListCount(): number {
-    return this.shoppingListService.getIngredients().length;
-  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { addIngredientToShoppingList, getShoppingList, removeItemFromShoppingList } from "../controllers/shopping_list.controller.js";
+import { addRecipeToShoppingList, clearShoppingListByUser, deleteShoppingItem, getShoppingListByUser } from "../controllers/shopping_list.controller.js";
 
 const router = Router();
 
-router.post('/shopping-list', addIngredientToShoppingList);
-router.get('/shopping-list', getShoppingList);
-router.delete('/shopping-list/:shoppingListItemId', removeItemFromShoppingList);
+router.post('/add-recipe', addRecipeToShoppingList );
+router.get('/:userId', getShoppingListByUser );
+router.delete('/:id', deleteShoppingItem);
+router.delete('/user/:userId', clearShoppingListByUser)
 
 
 export default router;

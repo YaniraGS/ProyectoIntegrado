@@ -21,7 +21,8 @@ export class RecipeDetailComponent implements OnInit {
   showModal = false;
   showErrorModal = false;
   selectedServings: number = 0;
-
+  recipeId!: number;
+  userId!: number;
 
 
   constructor(
@@ -52,7 +53,6 @@ export class RecipeDetailComponent implements OnInit {
             this.stepsArray = [];
           }
           this.loading = false;
-          console.log('Receta cargada:', this.recipe);
         },
         error: () => {
           this.error = 'Error cargando la receta';
@@ -68,6 +68,11 @@ export class RecipeDetailComponent implements OnInit {
         error: () => this.error = 'Error cargando ingredientes'
       });
     }
+
+    const user = this.authService.getUser();
+     if (user && user.id) {
+    this.userId = user.id;
+    }
   }
 
   getAdjustedQuantity(ingredient: Ingredient):number | null {
@@ -79,10 +84,17 @@ export class RecipeDetailComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
-  addToShoppingList() {
-    if (this.ingredients && this.recipe) {
-      this.shoppingListService.addIngredients(this.ingredients.map(ingredient => ingredient.name));
+ addToShoppingList(userId: number, recipeId: number): void {
+    console.log('Añadiendo receta con:', { userId, recipeId });
+
+  this.shoppingListService.addRecipeToShoppingList(userId, recipeId).subscribe({
+    
+    next: res => {
+    },
+    error: err => {
+      console.error('Error añadiendo receta:', err);
     }
+  });
   }
 
   addToFavorites(recipeId: number) {
