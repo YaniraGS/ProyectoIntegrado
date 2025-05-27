@@ -1,7 +1,7 @@
 
 .bg-custom {
-  background-color: #ee8b4d; /* el color que quieras */
-  color: rgb(0, 0, 0); /* para que el texto contraste */
+  background-color: #ee8b4d; 
+  color: rgb(0, 0, 0); 
 }
 
 .recipe-image {

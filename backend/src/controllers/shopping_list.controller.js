@@ -4,7 +4,6 @@ export const addRecipeToShoppingList = async (req, res) => {
   const { userId, recipeId, servings } = req.body;
 
   try {
-    // Primero obtén las cantidades base y las raciones base de la receta
     const recipeRes = await pool.query(`SELECT servings FROM recipes WHERE id = $1`, [recipeId]);
     if (recipeRes.rowCount === 0) {
       return res.status(404).json({ message: 'Receta no encontrada' });
@@ -16,7 +15,6 @@ export const addRecipeToShoppingList = async (req, res) => {
     `, [recipeId]);
 
     for (const ing of ingredients.rows) {
-      // Calcula cantidad ajustada
       const adjustedQuantity = (ing.quantity * servings) / baseServings;
 
       await pool.query(`

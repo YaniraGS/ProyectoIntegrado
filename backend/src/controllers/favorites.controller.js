@@ -1,7 +1,7 @@
 import { pool } from "../../db.js";
 
 export const addRecipeToFavorite = async (req, res) => {
-  const userId = req.user.id;        // viene del token
+  const userId = req.user.id;       
   const { recipeId } = req.body;
 
   if (!userId) {
@@ -31,7 +31,7 @@ export const addRecipeToFavorite = async (req, res) => {
 };
 
 export const getFavoriteRecipes = async (req, res) => {
-  const userId = req.user.id;  // viene del token
+  const userId = req.user.id; 
 
   if (!userId) {
     return res.status(401).json({ error: 'Usuario no autenticado' });
@@ -53,7 +53,7 @@ export const getFavoriteRecipes = async (req, res) => {
 };
 
 export const removeRecipeFavorite = async (req, res) => {
-  const userId = req.user.id;  // viene del token
+  const userId = req.user.id; 
   const { recipeId } = req.body;
 
   if (!userId) {

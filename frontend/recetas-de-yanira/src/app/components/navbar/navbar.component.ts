@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const user = this.authService.getUser();
     if (user && user.id) {
       this.userId = user.id;
-      this.shoppingListService.refreshItemCount(this.userId); // Inicial
+      this.shoppingListService.refreshItemCount(this.userId); 
       this.shoppingListService.itemCount$.subscribe(count => {
         this.listCount = count;
       });
