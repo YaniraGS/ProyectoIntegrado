@@ -15,14 +15,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   favoritesCount: number = 0;
   favoritesSub!: Subscription;
-  
-  constructor(public authService: AuthService, private router: Router,private favoritesService: FavoritesService) {}
-  
+  listCount = 0
+
+  constructor(public authService: AuthService, private router: Router, private favoritesService: FavoritesService, private shoppingListService: ShoppingListService) { }
+
   ngOnInit() {
-   this.favoritesSub = this.favoritesService.favoritesCount$.subscribe(count => {
+    this.favoritesSub = this.favoritesService.favoritesCount$.subscribe(count => {
       this.favoritesCount = count;
     });
     this.favoritesService.getFavorites().subscribe();
+
+    this.shoppingListService.itemCount$.subscribe(count => {
+      this.listCount = count;
+    });
   }
 
   ngOnDestroy() {

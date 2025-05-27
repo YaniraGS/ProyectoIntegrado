@@ -29,6 +29,7 @@ export class ShoppingListComponent implements OnInit {
   loadList(): void {
     this.shoppingService.getShoppingList(this.userId).subscribe(items => {
       this.shoppingList = items;
+      this.shoppingService.setItemCount(items.length);
     });
   }
 

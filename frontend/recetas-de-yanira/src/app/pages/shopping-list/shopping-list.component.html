@@ -21,7 +21,14 @@
           <tbody>
             <tr *ngFor="let item of shoppingList">
               <td class="text-capitalize align-middle">{{ item.name }}</td>
-              <td class="align-middle">{{ item.quantity }} {{ item.units }}</td>
+              <td>
+                <ng-container *ngIf="item.quantity && item.quantity > 0; else alGusto">
+                  {{ item.quantity }} {{ item.units }}
+                </ng-container>
+                <ng-template #alGusto>
+                  {{ item.units }}
+                </ng-template>
+              </td>
               <td class="align-middle">
                 <button class="btn btn-sm btn-outline-danger" (click)="deleteItem(item.id)">
                   <i class="bi bi-trash"></i>

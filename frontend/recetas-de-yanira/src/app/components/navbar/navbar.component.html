@@ -23,7 +23,7 @@
           <a class="nav-link" routerLink="/favorites" routerLinkActive="active"> <i
               class="bi bi-star"></i>&nbsp;Favoritos
             <span *ngIf="favoritesCount > 0" class="badge bg-custom-warning text-dark ms-2">
-      {{ favoritesCount }}
+              {{ favoritesCount }}
             </span>
           </a>
         </li>
@@ -32,7 +32,9 @@
           <a class="nav-link d-flex align-items-center" routerLink="/shopping-list" routerLinkActive="active">
             <i class="bi bi-cart"></i>&nbsp;
             Lista de la compra
-          
+            <span *ngIf="listCount>0" class="badge bg-custom-warning text-dark ms-2">
+              {{ listCount }}
+            </span>
           </a>
         </li>
       </ul>
