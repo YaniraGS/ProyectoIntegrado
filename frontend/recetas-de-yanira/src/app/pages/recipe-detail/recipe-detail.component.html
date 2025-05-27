@@ -18,7 +18,8 @@
         <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToFavorites(recipe.id)">
           Añadir a favoritos
         </button>
-        <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2" (click)="addToShoppingList(userId, recipe.id)">Añadir a la lista
+        <button *ngIf="isLoggedIn()" class="btn btn-outline-light me-2"
+          (click)="addToShoppingList(userId, recipe.id)">Añadir a la lista
           de la compra</button>
         <a class="btn btn-outline-light" routerLink="/recipes">Volver</a>
       </div>
@@ -100,6 +101,22 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-success" (click)="closeModal()">Volver</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Modal éxito -->
+      <div class="modal-backdrop fade show" *ngIf="showModalList"></div>
+      <div class="modal fade show d-block" *ngIf="showModalList" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-success">¡Ingredientes añadidos a la lista de la compra!</h5>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-success" (click)="closeModal()">Aceptar</button>
             </div>
           </div>
         </div>

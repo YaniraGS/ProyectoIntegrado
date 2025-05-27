@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   favoritesCount: number = 0;
   favoritesSub!: Subscription;
   listCount = 0
+  userId!: number;
 
   constructor(public authService: AuthService, private router: Router, private favoritesService: FavoritesService, private shoppingListService: ShoppingListService) { }
 
@@ -25,9 +26,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
     this.favoritesService.getFavorites().subscribe();
 
-    this.shoppingListService.itemCount$.subscribe(count => {
-      this.listCount = count;
-    });
+    const user = this.authService.getUser();
+    if (user && user.id) {
+      this.userId = user.id;
+      this.shoppingListService.refreshItemCount(this.userId); // Inicial
+      this.shoppingListService.itemCount$.subscribe(count => {
+        this.listCount = count;
+      });
+    }
   }
 
   ngOnDestroy() {

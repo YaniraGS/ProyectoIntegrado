@@ -34,7 +34,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   deleteItem(id: number): void {
-    this.shoppingService.deleteItem(id).subscribe(() => {
+    this.shoppingService.deleteItem(id, this.userId).subscribe(() => {
       this.loadList();
     });
   }

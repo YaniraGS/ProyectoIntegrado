@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 export interface ShoppingItem {
   id: number;
@@ -14,13 +14,18 @@ export interface ShoppingItem {
 })
 export class ShoppingListService {
   private apiUrl = 'http://localhost:3000/shopping-list';
+
   private itemCountSubject = new BehaviorSubject<number>(0);
   itemCount$ = this.itemCountSubject.asObservable();
 
 
-
   constructor(private http: HttpClient) { }
 
+  refreshItemCount(userId: number): void {
+    this.getShoppingList(userId).subscribe(items => {
+      this.itemCountSubject.next(items.length);
+    });
+  }
 
   setItemCount(count: number): void {
     this.itemCountSubject.next(count);
@@ -30,12 +35,16 @@ export class ShoppingListService {
     return this.http.get<ShoppingItem[]>(`${this.apiUrl}/${userId}`);
   }
 
-  deleteItem(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteItem(id: number, userId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+      tap(() => this.refreshItemCount(userId))
+    );
   }
 
   clearList(userId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/user/${userId}`);
+    return this.http.delete(`${this.apiUrl}/user/${userId}`).pipe(
+      tap(() => this.refreshItemCount(userId))
+    );
   }
 
   addRecipeToShoppingListWithServings(userId: number, recipeId: number, servings: number): Observable<any> {
@@ -43,6 +52,8 @@ export class ShoppingListService {
       userId: userId,
       recipeId: recipeId,
       servings: servings
-    });
+    }).pipe(
+      tap(() => this.refreshItemCount(userId))
+    )
   }
 }

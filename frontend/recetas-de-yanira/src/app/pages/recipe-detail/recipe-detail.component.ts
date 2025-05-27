@@ -23,6 +23,8 @@ export class RecipeDetailComponent implements OnInit {
   selectedServings: number = 0;
   recipeId!: number;
   userId!: number;
+  showModalList = false;
+  showErrorModalList = false;
 
 
   constructor(
@@ -59,7 +61,7 @@ export class RecipeDetailComponent implements OnInit {
           this.loading = false;
         }
       });
-      
+
 
       this.recipeService.getIngredientsByRecipe(recipeId).subscribe({
         next: (data) => {
@@ -70,12 +72,12 @@ export class RecipeDetailComponent implements OnInit {
     }
 
     const user = this.authService.getUser();
-     if (user && user.id) {
-    this.userId = user.id;
+    if (user && user.id) {
+      this.userId = user.id;
     }
   }
 
-  getAdjustedQuantity(ingredient: Ingredient):number | null {
+  getAdjustedQuantity(ingredient: Ingredient): number | null {
     if (!this.recipe || !ingredient.quantity) return null;
     return (ingredient.quantity * this.selectedServings) / this.recipe.servings;
   }
@@ -84,12 +86,12 @@ export class RecipeDetailComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
- addToShoppingList(userId: number, recipeId: number): void {
-  this.shoppingListService.addRecipeToShoppingListWithServings(userId, recipeId, this.selectedServings).subscribe({
-    next: res => {},
-    error: err => { console.error('Error añadiendo receta:', err); }
-  });
-}
+  addToShoppingList(userId: number, recipeId: number): void {
+    this.shoppingListService.addRecipeToShoppingListWithServings(userId, recipeId, this.selectedServings).subscribe({
+      next: res => { this.showModalList = true; },
+      error: err => { this.showErrorModalList = true; }
+    });
+  }
 
   addToFavorites(recipeId: number) {
     this.favoritesService.addFavorite(recipeId).subscribe({
@@ -101,6 +103,10 @@ export class RecipeDetailComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.showErrorModal = false;
+    this.showModalList = false;
+    this.showErrorModalList = false;
   }
+
+
 
 }
