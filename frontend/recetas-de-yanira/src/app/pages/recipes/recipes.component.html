@@ -1,52 +1,60 @@
 <div class="container mt-4 mb-5">
-  <h2 class="text-success mb-4" style="text-align: center;">RECETARIO</h2>
+  <div class="card shadow rounded border-0">
+    <div class="card-header bg-success text-white">
+      <h2 class="mb-2">Recetario</h2>
+    <p class="mb-0 fst-italic">Encuentra aquí todas nuestras recetas para inspirarte en la cocina</p>
+    </div>
 
-  <div class="container mt-4">
-    <div class="row">
 
-      <div class="col-md-6 mb-3">
-        <div class="input-group">
-          <input [(ngModel)]="searchRecipe" type="text" class="form-control" placeholder="Buscador de Recetas"
-            (keyup.enter)="filterRecipes()" maxlength="50">
-          <button (click)="filterRecipes()" class="btn btn-success">Buscar</button>
+    <div class="card-body">
+
+      <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+          <div class="input-group">
+            <input [(ngModel)]="searchRecipe" type="text" class="form-control" placeholder="Buscador de Recetas"
+              (keyup.enter)="filterRecipes()" maxlength="50">
+            <button (click)="filterRecipes()" class="btn btn-success">Buscar</button>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <div class="input-group">
+            <input [(ngModel)]="searchIngredient" type="text" class="form-control"
+              placeholder="Buscar Recetas por Ingrediente" (keyup.enter)="searchByIngredient()" maxlength="50">
+            <button (click)="searchByIngredient()" class="btn btn-success">Buscar</button>
+          </div>
         </div>
       </div>
 
-      <div class="col-md-6 mb-3">
-        <div class="input-group">
-          <input [(ngModel)]="searchIngredient" type="text" class="form-control"
-            placeholder="Buscar Recetas por Ingrediente" (keyup.enter)="searchByIngredient()"  maxlength="50">
-          <button (click)="searchByIngredient()" class="btn btn-success">Buscar</button>
+      <div *ngIf="loading" class="text-center my-4">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Cargando...</span>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div *ngIf="loading" class="text-center">
-    <div class="spinner-border text-success" role="status">
-      <span class="visually-hidden">Cargando...</span>
-    </div>
-  </div>
+      <div *ngIf="error" class="alert alert-warning text-center">
+        {{ error }}
+      </div>
 
-  <div *ngIf="error" class="alert alert-warning text-center">
-    {{ error }}
-  </div>
-
-  <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="!error && !loading">
-    <div class="col" *ngFor="let recipe of filteredRecipes.length ? filteredRecipes : recipes">
-      <div class="card h-100 border-success shadow-sm rounded-4 recipe-card">
-        <img [src]="'assets/' + recipe.image" class="card-img-top recipe-image rounded-top-4" alt="{{ recipe.name }}"
-          [routerLink]="['/recipes', recipe.id]">
-        <div class="card-body">
-          <h5 class="card-title">
-            <a [routerLink]="['/recipes', recipe.id]" class="text-success text-decoration-none">
-              {{ recipe.name }}
-            </a>
-          </h5>
-          <p class="card-text text-muted">{{ recipe.category }}</p>
+      <div class="table-responsive rounded overflow-hidden border border-2 border-success p-3" *ngIf="!error && !loading">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col" *ngFor="let recipe of filteredRecipes.length ? filteredRecipes : recipes">
+            <div class="card h-100 border-success shadow-sm rounded-4 recipe-card">
+              <img [src]="'assets/' + recipe.image" class="card-img-top recipe-image rounded-top-4"
+                alt="{{ recipe.name }}" [routerLink]="['/recipes', recipe.id]">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a [routerLink]="['/recipes', recipe.id]" class="text-success text-decoration-none">
+                    {{ recipe.name }}
+                  </a>
+                </h5>
+                <p class="card-text text-muted">{{ recipe.category }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
-
 </div>

@@ -12,6 +12,8 @@ import { AuthService } from '../../services/auth.service';
 export class ShoppingListComponent implements OnInit {
   shoppingList: ShoppingItem[] = [];
   userId: number = 0;
+  tachedItems = new Set<number>();
+
 
   constructor(
     private shoppingService: ShoppingListService,
@@ -43,5 +45,13 @@ export class ShoppingListComponent implements OnInit {
     this.shoppingService.clearList(this.userId).subscribe(() => {
       this.loadList();
     });
+  }
+
+  toggleTachado(id: number): void {
+    if (this.tachedItems.has(id)) {
+      this.tachedItems.delete(id);
+    } else {
+      this.tachedItems.add(id);
+    }
   }
 }

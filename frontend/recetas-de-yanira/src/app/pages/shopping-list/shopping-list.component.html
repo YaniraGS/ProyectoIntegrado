@@ -1,13 +1,19 @@
 <div class="container mt-4 mb-4">
   <div class="card shadow rounded border-0">
-    <div class="card-header bg-success text-white d-flex align-items-center justify-content-between">
-      <h2 class="mb-0">Lista de la compra</h2>
-      <button class="btn btn-outline-light btn-sm" (click)="clearList()">
-        <i class="bi bi-trash me-1"></i> Vaciar Lista
-      </button>
+    <div class="card-header bg-success text-white d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <h2 class="mb-0">Lista de la compra</h2>
+        <button class="btn btn-outline-light btn-sm" (click)="clearList()">
+          <i class="bi bi-trash me-1"></i> Vaciar Lista
+        </button>
+      </div>
+      <p class="mt-2 mb-0 fst-italic">
+        ¿Pensando en hacer la compra? Tus ingredientes están listos. Quita los que ya tienes en casa para no
+        desperdiciar y marca los que agregues al carrito para llevar el control.
+      </p>
     </div>
-    <div class="card-body p-0">
 
+    <div class="card-body p-0">
       <div class="table-responsive rounded overflow-hidden border border-2 border-success">
         <table *ngIf="shoppingList.length > 0" class="table table-striped mb-0">
           <thead class="table-success">
@@ -18,9 +24,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of shoppingList">
-              <td class="text-capitalize align-middle">{{ item.name }}</td>
-              <td>
+            <tr *ngFor="let item of shoppingList"  [class.text-decoration-line-through-style]="tachedItems.has(item.id)">
+              <td class="text-capitalize align-middle"
+                  (click)="toggleTachado(item.id)"
+                  style="cursor: pointer;">
+                {{ item.name }}
+              </td>
+              <td class="align-middle">
                 <ng-container *ngIf="item.quantity && item.quantity > 0; else alGusto">
                   {{ item.quantity }} {{ item.units }}
                 </ng-container>
@@ -41,7 +51,6 @@
       <div *ngIf="shoppingList.length === 0" class="text-center p-3 text-muted fst-italic">
         No hay ingredientes en tu lista.
       </div>
-
     </div>
   </div>
 </div>

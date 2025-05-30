@@ -39,7 +39,7 @@ export const getFavoriteRecipes = async (req, res) => {
 
   try {
     const { rows } = await pool.query(
-      `SELECT recipes.id, recipes.name FROM recipes 
+      `SELECT recipes.id, recipes.name, recipes.image FROM recipes 
        JOIN favorites ON recipes.id = favorites.recipe_id 
        WHERE favorites.user_id = $1`,
       [userId]
