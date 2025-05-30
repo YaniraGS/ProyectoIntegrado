@@ -34,8 +34,12 @@
             <label for="servings" class="mb-0 text-success">
               <h5 class="mb-0 text-success text-decoration-none">Comensales:</h5>
             </label>
-            <input id="servings" type="number" [(ngModel)]="selectedServings" [min]="1"
+            <input id="servings" type="number" [(ngModel)]="selectedServings" (change)="validateServings()"
               class="form-control form-control-sm" style="width: 60px;" />
+            <small *ngIf="servingsWarning" class="text-danger mt-1 d-block">
+              {{ servingsWarning }}
+            </small>
+
           </div>
 
           <div class="mb-3 text-muted d-flex gap-3 flex-wrap">

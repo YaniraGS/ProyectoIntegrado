@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   errorMessage = '';
+  showPassword: boolean = false;
+
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) { }
 
@@ -46,4 +48,7 @@ export class LoginComponent implements OnInit {
   return this.loginForm.controls;
 }
 
+togglePassword(): void {
+  this.showPassword = !this.showPassword;
+}
 }

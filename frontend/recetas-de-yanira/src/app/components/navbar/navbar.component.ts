@@ -45,6 +45,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    const user = this.authService.getUser();
+  if (user && user.id) {
+    this.shoppingListService.clearList(user.id).subscribe(() => {
+      console.log('Lista de la compra vaciada');
+    });
+  }
     this.authService.logout();
     this.router.navigate(['/login']);
   }

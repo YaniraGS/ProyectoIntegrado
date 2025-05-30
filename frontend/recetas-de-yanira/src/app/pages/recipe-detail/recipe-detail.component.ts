@@ -25,6 +25,7 @@ export class RecipeDetailComponent implements OnInit {
   userId!: number;
   showModalList = false;
   showErrorModalList = false;
+  servingsWarning: string = '';
 
 
   constructor(
@@ -81,6 +82,19 @@ export class RecipeDetailComponent implements OnInit {
     if (!this.recipe || !ingredient.quantity) return null;
     return (ingredient.quantity * this.selectedServings) / this.recipe.servings;
   }
+
+  validateServings(): void {
+  if (this.selectedServings < 1) {
+    this.selectedServings = 1;
+    this.servingsWarning = 'El número mínimo de comensales es 1.';
+  } else if (this.selectedServings > 50) {
+    this.selectedServings = 50;
+    this.servingsWarning = 'El número máximo de comensales es 50.';
+  } else {
+    this.servingsWarning = '';
+  }
+}
+
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
