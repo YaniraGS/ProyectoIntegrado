@@ -17,6 +17,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   favoritesSub!: Subscription;
   listCount = 0
   userId!: number;
+  userName!: string 
+
 
   constructor(public authService: AuthService, private router: Router, private favoritesService: FavoritesService, private shoppingListService: ShoppingListService) { }
 
@@ -28,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     const user = this.authService.getUser();
     if (user && user.id) {
+      this.userName = user?.name 
       this.userId = user.id;
       this.shoppingListService.refreshItemCount(this.userId); 
       this.shoppingListService.itemCount$.subscribe(count => {

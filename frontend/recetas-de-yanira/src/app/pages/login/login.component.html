@@ -32,3 +32,18 @@
     </div>
   </div>
 </div>
+
+<div class="modal-backdrop fade show" *ngIf="showModal" style="display: block;"></div>
+
+<div class="modal fade show" *ngIf="showModal" tabindex="-1" style="display:grid;" aria-modal="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title card-title text-center text-success">Sesion iniciada correctamente</h5>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success w-100" (click)="closeModal()">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>

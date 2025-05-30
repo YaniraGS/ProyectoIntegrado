@@ -49,10 +49,15 @@
           </li>
         </ng-container>
 
-        <li class="nav-item" *ngIf="isLoggedIn()">
+        <ng-container *ngIf="isLoggedIn()">
+        <li class="navbar-text me-3">Hola, {{ userName }}
+        </li>
+        <li class="nav-item" >
           <a class="nav-link" (click)="logout()" style="cursor: pointer;"><i class="bi bi-box-arrow-right"></i>&nbsp;
             Cerrar Sesión</a>
-        </li>
+          </li>
+        </ng-container>
+
       </ul>
     </div>
   </div>

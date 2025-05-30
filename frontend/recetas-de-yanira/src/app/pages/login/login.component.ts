@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessage = '';
   showPassword: boolean = false;
+  showModal: boolean = false;
 
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) { }
@@ -28,27 +29,33 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-  
-  const email = this.loginForm.get('email')?.value;
-  const password = this.loginForm.get('password')?.value;
 
-  this.authService.login(email, password).subscribe({
-    next: (res) => {
-      this.authService.setSession(res.token, res.user);
-      this.router.navigate(['/']);
-    },
-    error: (err) => {
-      this.errorMessage = 'Email o contraseña incorrectos';
-      console.error(err);
-    }
-  });
-  
-}
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    this.authService.login(email, password).subscribe({
+      next: (res) => {
+        this.authService.setSession(res.token, res.user);
+        this.showModal = true;
+      },
+      error: (err) => {
+        this.errorMessage = 'Email o contraseña incorrectos';
+        console.error(err);
+      }
+    });
+
+  }
   get f() {
-  return this.loginForm.controls;
-}
+    return this.loginForm.controls;
+  }
 
-togglePassword(): void {
-  this.showPassword = !this.showPassword;
-}
+  closeModal() {
+    this.showModal = false;
+    this.router.navigate(['/']);
+
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 }

@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password,name } = req.body;
     try {
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
@@ -24,7 +24,7 @@ export const login = async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        res.json({ token, user: { id: user.uid, email: user.email } });
+        res.json({ token, user: { id: user.uid, email: user.email, name: user.name } });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al iniciar sesión' });
