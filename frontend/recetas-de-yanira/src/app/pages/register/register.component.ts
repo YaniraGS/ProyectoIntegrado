@@ -21,9 +21,10 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
 
     this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      name:['', [Validators.required, Validators.maxLength(30)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required,Validators.minLength(6)]
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -46,8 +47,8 @@ export class RegisterComponent {
       return;
     }
 
-    const { email, password } = this.registerForm.value;
-    this.authService.register(email, password).subscribe({
+    const { email, password, name} = this.registerForm.value;
+    this.authService.register(email, password, name).subscribe({
       next: () => this.showModal=true,
       error: () => this.errorMessage = 'Error al registrarse. El correo electrónico ya existe.'
     });

@@ -7,6 +7,7 @@ interface LoginResponse {
   user: {
     id: number;
     email: string;
+    name: string;
   }
 }
 
@@ -31,8 +32,8 @@ export class AuthService {
 
   }
 
-  register(email: string, password: string) {
-  return this.http.post(`${this.apiUrl}/register`, { email, password });
+  register(email: string, password: string, name: string) {
+  return this.http.post(`${this.apiUrl}/register`, { email, password, name });
 }
 
   setSession(token: string, user: any) {

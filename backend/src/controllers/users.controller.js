@@ -33,7 +33,7 @@ export const login = async (req, res) => {
 
 
 export const register = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
     try {
         const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -44,14 +44,14 @@ export const register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10);
 
         const result = await pool.query(
-            'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING uid, email',
-            [email, passwordHash]
+            'INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING uid, email, name',
+            [email, passwordHash, name]
         );
 
         const newUser = result.rows[0];
 
         const token = jwt.sign(
-            { id: newUser.uid, email: newUser.email },
+            { id: newUser.uid, email: newUser.email, name: newUser.name },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );
@@ -79,22 +79,4 @@ export const getUser = async (req, res) => {
     res.send(rows[0])
 }
 
-export const deleteUser = async (req, res) => {
-    const { id } = req.params;
-    const { rowCount } = await pool.query('DELETE FROM users WHERE uid = $1', [id])
-    if (rowCount === 0) {
-        return res.status(404).json({ message: "User not found" })
-    }
-    return res.json({ message: "User deleted" });
-}
 
-
-export const updateUser = async (req, res) => {
-    const { id } = req.params;
-    const data = req.body;
-
-    const { rows } = await pool.query(
-        'UPDATE users SET email =$1, password = $2 WHERE uid= $3',
-        [data.email, data.password, id])
-    res.json(rows[0])
-}
