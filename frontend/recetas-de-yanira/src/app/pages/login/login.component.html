@@ -8,14 +8,14 @@
           <form [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="mb-3">
               <label for="email" class="form-label">Correo electrónico</label>
-              <input formControlName="email" id="email" type="email" class="form-control">
+              <input formControlName="email" id="email" type="email" class="form-control" maxlength="50">
             </div>
 
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña</label>
               <div class="input-group">
 
-                <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password"
+                <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" maxlength="30"
                   class="form-control">
                 <button type="button" class="btn btn-outline-secondary" (click)="togglePassword()" tabindex="-1">
                   <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>

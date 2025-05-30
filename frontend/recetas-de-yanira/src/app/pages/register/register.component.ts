@@ -14,20 +14,21 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage = '';
-  showModal= false;
+  showModal = false;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
 
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
 
     this.registerForm = this.fb.group({
-      name:['', [Validators.required, Validators.maxLength(30)]],
+      name: ['', [Validators.required, Validators.maxLength(30)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required,Validators.minLength(6)]
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
     }, { validators: this.passwordMatchValidator });
   }
-
 
   passwordMatchValidator(form: AbstractControl) {
     const password = form.get('password')?.value;
@@ -39,6 +40,13 @@ export class RegisterComponent {
     }
   }
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
   register() {
     if (this.registerForm.invalid) {
@@ -47,9 +55,9 @@ export class RegisterComponent {
       return;
     }
 
-    const { email, password, name} = this.registerForm.value;
+    const { email, password, name } = this.registerForm.value;
     this.authService.register(email, password, name).subscribe({
-      next: () => this.showModal=true,
+      next: () => this.showModal = true,
       error: () => this.errorMessage = 'Error al registrarse. El correo electrónico ya existe.'
     });
 

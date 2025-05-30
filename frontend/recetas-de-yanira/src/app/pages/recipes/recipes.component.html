@@ -7,7 +7,7 @@
       <div class="col-md-6 mb-3">
         <div class="input-group">
           <input [(ngModel)]="searchRecipe" type="text" class="form-control" placeholder="Buscador de Recetas"
-            (keyup.enter)="filterRecipes()">
+            (keyup.enter)="filterRecipes()" maxlength="50">
           <button (click)="filterRecipes()" class="btn btn-success">Buscar</button>
         </div>
       </div>
@@ -15,7 +15,7 @@
       <div class="col-md-6 mb-3">
         <div class="input-group">
           <input [(ngModel)]="searchIngredient" type="text" class="form-control"
-            placeholder="Buscar Recetas por Ingrediente" (keyup.enter)="searchByIngredient()">
+            placeholder="Buscar Recetas por Ingrediente" (keyup.enter)="searchByIngredient()"  maxlength="50">
           <button (click)="searchByIngredient()" class="btn btn-success">Buscar</button>
         </div>
       </div>
