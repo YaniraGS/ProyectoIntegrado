@@ -10,3 +10,15 @@
   object-fit: cover;
   border-radius: 0.5rem;
 }
+
+.card-body {
+  overflow-x: hidden;
+}
+
+.card {
+  max-width: 100%;
+}
+
+.row {
+  flex-wrap: wrap;
+}
