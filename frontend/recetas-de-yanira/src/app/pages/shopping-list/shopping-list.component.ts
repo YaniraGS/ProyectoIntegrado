@@ -22,8 +22,8 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
   const user = this.authService.getUser();
-  if (user && user.id) {
-    this.userId = user.id;
+  if (user) {
+
     this.loadList();
   } 
 }

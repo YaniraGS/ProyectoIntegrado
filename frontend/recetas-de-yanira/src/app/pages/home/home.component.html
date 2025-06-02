@@ -1,10 +1,22 @@
-<div class="container text-center mt-2 mb-2">
-  <div class="p-5 bg-light rounded shadow">
-<img src="assets/images/logo.png" alt="Logo" class="img-fluid mb-4" style="max-width: 300px;">
-    <h1 class="display-4 text-success mb-3">Bienvenido a Recetas de Yanira</h1>
-    <p class="lead">Descubre y guarda tus recetas favoritas con facilidad.</p>
-        <p class="lead">¡Además te gerenamos tu lista de la compra!</p>
-    <div class="mt-4">
+<div class="container mt-4 mb-2">
+  <div class="bg-light p-5 rounded shadow text-center">
+    <div class="mb-3">
+      <img src="assets/images/logo.png" alt="Logo" class="img-fluid" style="max-width: 220px;">
     </div>
+    <h1 class="display-6 text-success mb-3">Descubre. Guarda. Cocina.</h1>
+    <p class="lead mb-4">Recetas de Yanira es tu espacio para encontrar ideas deliciosas y llevarlas contigo.
+¿Listo para empezar?</p>
+
+
+    <div *ngIf="!isLoggedIn" class="text-center mt-3">
+      <p class="lead text-success fw-bold mb-3">
+        Regístrate o inicia sesión y ten todo a mano, incluso tu lista de la compra..
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <a routerLink="/register" class="btn btn-success btn-lg px-4"><i class="bi bi-person-plus-fill me-2"></i>Regístrate</a>
+        <a routerLink="/login" class="btn btn-success btn-lg px-4"><i class="bi bi-box-arrow-in-right me-2"></i>Inicia sesión</a>
+      </div>
+    </div>
+
   </div>
 </div>
