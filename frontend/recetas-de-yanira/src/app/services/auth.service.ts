@@ -17,6 +17,8 @@ interface LoginResponse {
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+private currentUserSubject = new BehaviorSubject<any>(this.getUser());
+currentUser$ = this.currentUserSubject.asObservable();
 
 
   constructor(private http: HttpClient) { }
@@ -29,7 +31,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.loggedInSubject.next(false);
-
+    this.currentUserSubject.next(null);
   }
 
   register(email: string, password: string, name: string) {
@@ -40,7 +42,7 @@ export class AuthService {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     this.loggedInSubject.next(true);
-
+    this.currentUserSubject.next(user);
   }
 
   getToken(): string | null {
